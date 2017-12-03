@@ -1,0 +1,75 @@
+//===== FONTS
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700,900');
+
+//===== IMPORTS
+@import "variable";
+@import "mixins";
+@import "animation";
+
+body{
+    font-family: $primary-font;
+}
+
+#Wrapper{
+    .slide{
+        width: 100vw;
+        height: 100vh;
+        display: table;
+        position: relative;
+        .center{
+            margin: 0 auto;
+            display: inline-block;
+            vertical-align: middle;
+            display: table-cell;
+            text-align: center;
+            padding: 0 60px;
+            .block{
+                margin: 0 auto;
+                max-width: $block-size;
+                h1{
+                    font-size: $h1-font-size;
+                    color: $h1-color;
+                    font-weight: bold;
+                    font-family: unset;
+                    letter-spacing: -6px;
+                    word-spacing: 11px;
+                }
+                h2{
+                    font-size: $h2-font-size;
+                    color: $primary-color;
+                    // font-size: 10px;
+                }
+            }
+        }
+    }
+
+    // ARROWS
+    .arrow{
+        top: 50%;
+        position: absolute;
+    }
+    .arrow.next{
+        position: absolute;
+        // @include centerer(false, true);
+    }
+    .arrow.previous{
+        @include flip(true, false);
+        // @include centerer(false, true);
+    }
+
+    // First slide
+    .FirstSlide{
+        box-sizing: border-box;
+        background-color: #2a2a2a;
+        h2{
+            @include inline-block;
+            min-height: 120px;
+            font-weight: 300;
+        }
+        .typed-cursor{
+            font-size: $h2-font-size;
+        }
+    }
+
+}

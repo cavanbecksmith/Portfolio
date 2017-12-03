@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Cavan Becksmith</title>
+        <!-- EMOJI CSS -->
+        <!-- <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> -->
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+    </head>
+    <body style="padding:0;margin:0">
+        <!-- For webpack -->
+        <div id="Wrapper">
+            
+            <!-- ===== Slide ===== -->
+            <div class="slide FirstSlide">
+                
+                <!-- Center -->
+                <div class="center">
+                    <div class="block">
+                        <h1>Hello 🌍 im Cavan & I am</h1>
+                        <h2 id="Typed"> 🔴
+                            <span class="pointer"></span>
+                        </h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="slide">
+                Slide 2
+            </div>
+            <div class="slide">Slide 3</div>
+
+            <!-- ==== Sidebar Navigation -->
+<!--             <nav>
+              <ul>
+                  <li class="active"></li>
+                  <li></li>
+              </ul>  
+            </nav> -->
+
+            <!-- ==== ARROWS ==== -->
+            <div class="next arrow" style="opacity: 0; right: 0; display: none;"><img src="./img/cookyArrow.svg" class="SVG" width="60px"/></div>
+            <div class="previous arrow" style="opacity: 0; left: 0; display: none;"><img src="./img/cookyArrow.svg" class="SVG" width="60px"/></div>
+
+        </div>
+        <!--build:js js/main.js-->
+        <script type="text/javascript" src="js/inlineSVG.min.js"></script>
+        <script src="js/bundle.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>
