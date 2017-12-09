@@ -8,6 +8,8 @@ import slide1 from './modules/slide_1';
 
 var App = {
 	currentSlide: 0,
+	// nextSlide: 0,
+	slideLen: 0,
 	$this: this,
 	init(){
 		// SETUP
@@ -29,11 +31,8 @@ var App = {
 		// Slide 1
 		slide1.init();
 	},
-	previousSlide(){},
-	nextSlide(slide1, slide2){
+	previousSlide(thisSlide, nextSlide, lastSlide){
 
-		var thisSlide = $($('.slide')[App.currentSlide]);
-		var nextSlide = $($('.slide')[App.currentSlide+1]);
 		var window_w = $(window).width();
 		var window_h = $(window).height();
 
@@ -42,7 +41,43 @@ var App = {
 		var scale = 0.75;
 		var time = 0.25;
 
-		console.log(nextSlide);
+		var dataID = Number(thisSlide.attr('data-id'))-1;
+
+		tl
+
+			// SET Z-INDEX and ready positions
+			.set(nextSlide, {css: {left: (-window_w - offset), zIndex: 1, scale: scale}})
+			.set(thisSlide, {css: {zIndex: -1}})
+
+			// Apply transformations
+			// START
+			.addLabel('Start')
+			.to(thisSlide, time, {css: {scale:scale}})
+
+			.addLabel('MID')
+			.to(thisSlide, 1, {css: {left: (window_w + offset)}}, 'MID')
+			.to(nextSlide, 1, {css: {left: 0}}, 'MID')
+			.to(nextSlide, time, {css: {left: 0, scale: 1}})
+
+			if(lastSlide === false){
+				App.currentSlide--;
+			}
+
+
+	},
+	nextSlide(thisSlide, nextSlide, lastSlide){
+
+		// var thisSlide = $($('.slide')[App.currentSlide]);
+		// var nextSlide = $($('.slide')[App.currentSlide+1]);
+		var window_w = $(window).width();
+		var window_h = $(window).height();
+
+		var offset = 200;
+		var tl = new TimelineLite();
+		var scale = 0.75;
+		var time = 0.25;
+
+		var dataID = Number(thisSlide.attr('data-id'))+1;
 
 		tl
 
@@ -60,6 +95,12 @@ var App = {
 			.to(nextSlide, 1, {css: {left: 0}}, 'MID')
 			.to(nextSlide, time, {css: {left: 0, scale: 1}})
 			// .to(thisSlide, 1, {css: {left: (-window_w - offset)}})
+
+			console.log(dataID, $('.slide').length)
+
+		if(lastSlide === false){
+			App.currentSlide++;
+		}
 
 	},
 	events: function(){
@@ -80,7 +121,52 @@ var App = {
 
 		//====== BTNS
 		$('div.next').on('click', function(){
-			App.nextSlide();
+
+			console.log('==============')
+			console.log('NEXT CLICK')
+
+			var $this = $(this).parent();
+			var thisID = Number($this.attr('data-id'));
+			var next = $('.slide')[thisID+1];
+			var lastSlide;
+
+			if((thisID+1) == $('.slide').length){
+				next = $('.slide')[0];
+				App.currentSlide = 0;
+				lastSlide = true;
+			}
+			else{
+				lastSlide = false;
+			}
+
+			console.log("THIS: ",$this)
+			console.log("THIS ID: ",thisID)
+			console.log("NEXT: ",next)
+
+			App.nextSlide($this, next);
+		})
+
+		$('div.previous').on('click', function(){
+
+			var prevID = Number($(this).parent().attr('data-id')) -1;
+			var $this = $(this).parent();
+			var next = $('.slide')[prevID];
+			var lastSlide;
+
+			if(prevID === -1){
+				App.currentSlide = (App.slideLen);
+				next = $('.slide')[$('.slide').length-1];
+				
+				lastSlide = true;
+			} 
+			else{
+				lastSlide = false
+			}
+
+			console.log("NEXT SLIDE: ", next);
+			console.log("THIS: ", $this);
+
+			App.previousSlide($this, next, lastSlide);
 		})
 
 	},
@@ -89,11 +175,19 @@ var App = {
 		var window_w = $(window).width();
 		var offset = 200;
 
+		App.slideLen = $('.slide').length;
+
 		$('.slide').each(function(i){
+
+			var id = i;
+
 			if(i != App.currentSlide){
 				// $(this).hide();
 				$(this).css({'z-index': '-1', left: (window_w + offset)+ 'px'})
 			}
+
+			$(this).attr('data-id', id);
+
 		});
 	},
 	createArrows(){
@@ -103,6 +197,7 @@ var App = {
 
 		// APPEND THE ARROWS TO EACH SLIDE
 		$('.slide').each(function(){
+
 			$(this).append(next.clone());
 			$(this).append(previous.clone());
 			App.fadeIn($(this).find('.next'));
@@ -121,4 +216,5 @@ var App = {
 }
 $(document).ready(function(){
 	App.init();	
+	window.app = App;
 });
