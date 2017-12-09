@@ -9,6 +9,7 @@
 
 body{
     font-family: $primary-font;
+    background: $body-bk;
 }
 
 #Wrapper{
@@ -16,7 +17,7 @@ body{
         width: 100vw;
         height: 100vh;
         display: table;
-        position: relative;
+        position: absolute;
         .center{
             margin: 0 auto;
             display: inline-block;
@@ -59,7 +60,7 @@ body{
     }
 
     // First slide
-    .FirstSlide{
+    .Slide1{
         box-sizing: border-box;
         background-color: #2a2a2a;
         h2{
@@ -70,6 +71,12 @@ body{
         .typed-cursor{
             font-size: $h2-font-size;
         }
+    }
+
+
+    // Second slide
+    .Slide2{
+        background-color: #2a2a2a   ;
     }
 
 }
