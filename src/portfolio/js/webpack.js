@@ -4,6 +4,7 @@ import {TweenMax, Power2, TimelineLite} from "gsap";
 
 // ===== PAGE IMPORTS
 import slide1 from './modules/slide_1';
+import slide2 from './modules/slide_2';
 
 
 var App = {
@@ -30,6 +31,9 @@ var App = {
 		App.hideSlides();
 		// Slide 1
 		slide1.init();
+
+		// Slide 2
+		slide2.init();
 	},
 	previousSlide(thisSlide, nextSlide, lastSlide){
 
@@ -125,8 +129,8 @@ var App = {
 			console.log('==============')
 			console.log('NEXT CLICK')
 
-			var thisID = Number($this.attr('data-id'));
 			var $this = $(this).parent();
+			var thisID = Number($this.attr('data-id'));
 			var next = $('.slide')[thisID+1];
 			var lastSlide;
 
