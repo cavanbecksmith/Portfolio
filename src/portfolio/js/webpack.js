@@ -8,7 +8,7 @@ import slide2 from './modules/slide_2';
 
 
 var App = {
-	currentSlide: 0,
+	currentSlide: 1,
 	// nextSlide: 0,
 	slideLen: 0,
 	$this: this,
@@ -124,6 +124,8 @@ var App = {
 		});
 
 		//====== BTNS
+
+		// NEXT
 		$('div.next').on('click', function(){
 
 			console.log('==============')
@@ -150,6 +152,7 @@ var App = {
 			App.nextSlide($this, next);
 		})
 
+		// PREVIOUS
 		$('div.previous').on('click', function(){
 
 			var prevID = Number($(this).parent().attr('data-id')) -1;

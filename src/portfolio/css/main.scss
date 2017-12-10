@@ -47,8 +47,9 @@ body{
 
     // ARROWS
     .arrow{
-        top: 50%;
+        top: 43%;
         position: absolute;
+        cursor: pointer;
     }
     .arrow.next{
         position: absolute;
@@ -62,7 +63,45 @@ body{
     // First slide
     .Slide1{
         box-sizing: border-box;
-        background-color: #2a2a2a;
+        // background-color: #2a2a2a;
+        // background: #360033;  /* fallback for old browsers */
+        // background: -webkit-linear-gradient(top left, #845EC2, #2C73D2, #0081CF, #0089BA, #008E9B, #008F7A);  /* Chrome 10-25, Safari 5.1-6 */
+        // background: linear-gradient(to right, #0b8793, #360033); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        .london{
+            background: url('../img/london_eye.jpg');
+            
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+
+            z-index: -1;
+        }
+
+        .gradient{
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+
+            background: linear-gradient(270deg, #845ec2, #d65db1, #ff6f91, #ff9671, #ffc75f, #f9f871);
+            background-size: 1200% 1200%;
+
+            -webkit-animation: AnimationName 30s ease infinite;
+            -moz-animation: AnimationName 30s ease infinite;
+            animation: AnimationName 30s ease infinite;
+
+        }
+
         h2{
             @include inline-block;
             min-height: 120px;
@@ -76,7 +115,7 @@ body{
 
     // Second slide
     .Slide2{
-        background-color: #2a2a2a   ;
+        background: linear-gradient(to bottom, #020111 10%,#3a3a52 100%);
     }
 
 }
