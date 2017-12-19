@@ -61,7 +61,7 @@ export default{
 
 			// ENTER
 			if(Number(event.which) == 13){
-				console.log('ENTER pressed');
+				// console.log('ENTER pressed');
 				$this.playing = true;
 				$this.ship.takeOff();
 			}

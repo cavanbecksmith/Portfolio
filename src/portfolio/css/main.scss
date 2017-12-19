@@ -115,7 +115,27 @@ body{
 
     // Second slide
     .Slide2{
-        background: linear-gradient(to bottom, #020111 10%,#3a3a52 100%);
+        // background: linear-gradient(to bottom, #020111 10%,#3a3a52 100%);
+        // background: linear-gradient(#020111, #3a3a52);
+        background-image: -webkit-linear-gradient(top, green, yellow); 
+        animation-duration: 6s;
+        overflow: hidden;
+        .ground{
+            position: absolute;
+            left: -300px;
+            right: -300px;
+            bottom: -100px;
+            height: 200px;
+            background-color: #27c787;
+            border-radius: 50%;
+        }
+    }
+
+    .Slide2.alt{
+    -webkit-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+        background: linear-gradient(to bottom, #fff 10%,#eee 100%);
     }
 
 }

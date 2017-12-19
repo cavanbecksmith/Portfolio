@@ -1,5 +1,6 @@
-import {TweenMax, Power2, TimelineLite} from "gsap";
+import {TweenMax, Power2, TimelineLite, TweenLite} from "gsap";
 import $ from 'jquery';
+// import test from '../animateGrad';
 
 var inlineSVG = require('inline-svg');
 
@@ -19,7 +20,6 @@ class Ship {
 			min: 0,
 			max: $(window).width()
 		};
-
 		this.takenOff = false;
 		this.create();
 	}
@@ -33,13 +33,13 @@ class Ship {
 
 	create(){
 		
+		// Setup Variables
 		var $this = this;
 		var img = this.preloadImage(this.image);
 		img = $(img).attr('class', 'INLINE');
 		var ship = $('<div></div>').attr({'width': this.width, 'class': 'SHIP'}).css({bottom:'20px', right:'43%',position:'absolute', 'width': '100px'});
 
-		console.log('IMAGE', img, 'SHIP', ship);
-
+		// Append ship to container and img to ship
 		this.container.append(ship);
 		ship.append(img);
 
@@ -49,14 +49,14 @@ class Ship {
 		// EL
 		this.el = ship;
 
-		console.log(this.el);
-
+		// Start game loop
 		setInterval(function(){
 			$this.update();
 		}, 9)
 
 	}
 
+	// Converts svg from img to svg
 	svgConvert(){
 		var sc = ".INLINE"
 		var $this = this;
@@ -71,6 +71,7 @@ class Ship {
 		return sc;
 	}
 
+	// Called on update, move in direction left right & still
 	moveShip(direction){
 
 		var leftPos = this.el.css('left');
@@ -91,10 +92,7 @@ class Ship {
 			nextPos = leftPos + this.speed;
 		}
 
-
-		// console.log(leftPos - this.speed);
-		// console.log('SPEED: ', this.speed, 'LEFT: ', leftPos);
-
+		// If the ship has taken off apply the code for moving
 		if(this.takenOff === true){
 			this.el.css({'left': nextPos+'px'});
 		}
@@ -102,8 +100,33 @@ class Ship {
 	}
 
 	takeOff(){
-		console.log('TAKEOFF');
+
+		var colors = {top:"blue", bottom:"yellow"};
+
+		// Make the rocket takeoff
+		TweenMax.to(this.el, 2, {css: {bottom: 100}});
 		this.takenOff = true;
+
+		console.log(test);
+
+		// https://github.com/IonicaBizau/jQuery-animate-gradient
+
+
+
+		// https://codepen.io/GreenSock/pen/wnIcr/
+		// var tween = TweenLite.to(colors, 2, {colorProps:{top:"red", bottom:"yellow"}, onUpdate:colorize, onUpdateParams:[".Slide2"], paused:true});
+		// function colorize(element) {
+		//   //apply the colors to the element
+		//   TweenLite.set(element, {backgroundImage:"-webkit-linear-gradient(top," + colors.top + ", " + colors.bottom + ")"});
+		// }
+		// function over() {
+		//   tween.play();
+		// };
+		// function out() {
+		//   tween.reverse();
+		// }
+
+
 	}
 
 	left(){
@@ -129,4 +152,4 @@ class Ship {
 	}
 }
 
-export {Ship}
+export {Ship}	

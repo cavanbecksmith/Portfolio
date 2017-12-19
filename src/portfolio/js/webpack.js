@@ -1,11 +1,10 @@
 // ===== MODULE IMPORTS
-import $ from 'jquery';
+import $ from 'jquery'; window.$ = $;
 import {TweenMax, Power2, TimelineLite} from "gsap";
 
 // ===== PAGE IMPORTS
 import slide1 from './modules/slide_1';
 import slide2 from './modules/slide_2';
-
 
 var App = {
 	currentSlide: 1,
