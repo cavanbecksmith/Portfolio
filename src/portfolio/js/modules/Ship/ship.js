@@ -1,6 +1,6 @@
 import {TweenMax, Power2, TimelineLite, TweenLite} from "gsap";
 import $ from 'jquery';
-// import test from '../animateGrad';
+import Granim from 'granim';
 
 var inlineSVG = require('inline-svg');
 
@@ -48,6 +48,39 @@ class Ship {
 
 		// EL
 		this.el = ship;
+
+		// Create gradient
+		this.granimInstance = new Granim({
+		    element: '#GRADIENT',
+		    name: 'interactive-gradient',
+		    // elToSetClassOn: '.canvas-interactive-wrapper',
+		    direction: 'diagonal',
+		    opacity: [1, 1],
+		    isPausedWhenNotInView: true,
+		    stateTransitionSpeed: 500,
+		    states : {
+		        "default-state": {
+		            gradients: [
+		                ['#B3FFAB', '#12FFF7'],
+		                ['#ADD100', '#7B920A'],
+		                ['#1A2980', '#26D0CE']
+		            ],
+		            transitionSpeed: 10000
+		        },
+		        "violet-state": {
+		            gradients: [
+		                ['#9D50BB', '#6E48AA'],
+		                ['#4776E6', '#8E54E9']
+		            ],
+		            transitionSpeed: 2000
+		        },
+		        "orange-state": {
+		            gradients: [ ['#FF4E50', '#F9D423'] ],
+		            loop: false
+		        }
+		    }
+		});
+
 
 		// Start game loop
 		setInterval(function(){
@@ -107,11 +140,7 @@ class Ship {
 		TweenMax.to(this.el, 2, {css: {bottom: 100}});
 		this.takenOff = true;
 
-		console.log(test);
-
-		// https://github.com/IonicaBizau/jQuery-animate-gradient
-
-
+		console.log(granimInstance);
 
 		// https://codepen.io/GreenSock/pen/wnIcr/
 		// var tween = TweenLite.to(colors, 2, {colorProps:{top:"red", bottom:"yellow"}, onUpdate:colorize, onUpdateParams:[".Slide2"], paused:true});

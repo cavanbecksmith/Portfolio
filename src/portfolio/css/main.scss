@@ -116,8 +116,8 @@ body{
     // Second slide
     .Slide2{
         // background: linear-gradient(to bottom, #020111 10%,#3a3a52 100%);
-        // background: linear-gradient(#020111, #3a3a52);
-        background-image: -webkit-linear-gradient(top, green, yellow); 
+        background: linear-gradient(#020111, #3a3a52);
+        // background-image: -webkit-linear-gradient(top, green, yellow); 
         animation-duration: 6s;
         overflow: hidden;
         .ground{
