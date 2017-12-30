@@ -73,3 +73,17 @@ background-size: $size $size;
   
   @include animation(gradient-animate $duration linear infinite);
 }
+
+// === OVERFLOW FIREFOX FIX
+@mixin overflow {
+	-moz-overflow:hidden;
+	overflow: hidden;
+}
+
+// === ANIMATION MIXIN
+@mixin animation($animation, $speed, $iterate){
+	-webkit-animation: $animation $speed ease $iterate;
+	-moz-animation: $animation $speed ease $iterate;
+	animation: $animation $speed ease $iterate;
+
+}

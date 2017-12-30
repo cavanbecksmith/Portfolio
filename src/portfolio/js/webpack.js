@@ -127,9 +127,6 @@ var App = {
 		// NEXT
 		$('div.next').on('click', function(){
 
-			console.log('==============')
-			console.log('NEXT CLICK')
-
 			var $this = $(this).parent();
 			var thisID = Number($this.attr('data-id'));
 			var next = $('.slide')[thisID+1];
@@ -169,8 +166,8 @@ var App = {
 				lastSlide = false
 			}
 
-			console.log("NEXT SLIDE: ", next);
-			console.log("THIS: ", $this);
+			// console.log("NEXT SLIDE: ", next);
+			// console.log("THIS: ", $this);
 
 			App.previousSlide($this, next, lastSlide);
 		})

@@ -37,3 +37,14 @@
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
 }
+
+// ==== SMOKE ANIMATION
+@keyframes smoke_size{
+  0%{transform:scale(.25);}
+  20%{transform:scale(.5);}
+  40%{transform:scale(.75);}
+  60%{transform:scale(1);}
+  80%{transform:scale(.75);}
+  90%{transform:scale(.5);}
+  100%{transform:scale(.25);}
+}

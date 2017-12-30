@@ -116,10 +116,10 @@ body{
     // Second slide
     .Slide2{
         // background: linear-gradient(to bottom, #020111 10%,#3a3a52 100%);
-        background: linear-gradient(#020111, #3a3a52);
+        // background: linear-gradient(#020111, #3a3a52);
         // background-image: -webkit-linear-gradient(top, green, yellow); 
-        animation-duration: 6s;
-        overflow: hidden;
+        // animation-duration: 6s;
+        @include overflow;
         .ground{
             position: absolute;
             left: -300px;
@@ -128,14 +128,36 @@ body{
             height: 200px;
             background-color: #27c787;
             border-radius: 50%;
+            z-index: $middleground;
+            clip: auto;
         }
-    }
 
-    .Slide2.alt{
-    -webkit-transition: background-color 1000ms linear;
-    -ms-transition: background-color 1000ms linear;
-    transition: background-color 1000ms linear;
-        background: linear-gradient(to bottom, #fff 10%,#eee 100%);
+        .props{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            overflow: hidden;
+            // overflow: auto; // Overflow fix to stop elements flowing over slide container
+        }
+
+        #GRADIENT{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: $back;
+        }
+        .rocket{
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+        }
+        .smoke{
+            position: absolute;
+            bottom: -40px;
+            z-index: 0;
+            // opacity: 0;
+            @include animation('smoke_size', 1s, infinite)
+        }
     }
 
 }
