@@ -8,7 +8,7 @@ export default{
 	init(){
 		// this.start();
 		this.events();
-		this.applyBlur();
+		// this.applyBlur();
 		window.a = this;
 	},
 

@@ -1,7 +1,8 @@
-import {TweenMax, Power2, TimelineMax, Back} from "gsap";
+import {TweenMax, Power2, TimelineMax, Back, SlowMo, Circ} from "gsap";
 import $ from 'jquery';
 import Granim from 'granim';
 import {Flame} from './Flame';
+import anime from 'animejs';	
 
 var inlineSVG = require('inline-svg');
 var requestId = undefined;
@@ -10,23 +11,31 @@ var GameObj;
 class Game {
 
 	constructor(container){
-
+		window.g = this;
 		console.log('================')
 		console.log('SHIP CONSTRUCTOR')
 
+		// Elements
 		this.container = container;
-		this.direction = 'still';
+		this.el = null;
+
+		// SPACE TIME
 		this.speed = 0;
 		this.width = 100;
-		this.rocket = '../img/ship/ship.svg';
-		this.smoke = '../img/ship/smoke.svg';
+		this.direction = 'none';
+
+		this.rocket = 'img/ship/ship2.svg';
+		// this.smoke = '../img/ship/smoke.svg';
 		this.boundary = {
 			min: 0,
 			max: $(window).width()
 		};
-		this.takenOff = false;
 
-		// Create gradient
+		// ENV Variables
+		this.takenOff = false;
+		this.gameReady = false;
+
+		// CREATE GRADIENT
 		this.gradient = new Granim({
 		    element: '#GRADIENT',
 		    name: 'interactive-gradient',
@@ -59,7 +68,7 @@ class Game {
 		        }
 		    }
 		});
-		this.el = null;
+		
 		this.create();
 	}
 
@@ -68,6 +77,9 @@ class Game {
 	{
 	    var img=new Image();
 	    img.src=url;
+
+	    console.log(img);
+
 	    return img;
 	}
 
@@ -77,16 +89,15 @@ class Game {
 		// Setup Variables, append img to ship container
 		var $this = this;
 
+
+		// LOAD ROCKET SVG IMAGE
 		var rkt = this.preloadImage(this.rocket);
 		rkt = $(rkt).attr('class', 'INLINE rocket');
 
-		// var smoke = this.preloadImage(this.smoke);
-		// smoke = $(smoke).attr('class', 'INLINE smoke');
-
-		// Create rocket container
+		// ROCKET CONTAINER
 		var rktContainer = $('<div></div>')
 			.attr({'width': this.width, 'class': 'SHIP'})
-			.css({'width': '100px', 'position': 'absolute'});
+			.css({'width': '100px', 'position': 'absolute', 'transform-origin': 'center, center'});
 
 		var flameCont = $('<canvas id="flame"></canvas>')
 			.css({
@@ -114,7 +125,7 @@ class Game {
 		this.el = rktContainer;
 		this.setShip();
 
-		// Set game object
+		// GLOBAL GAME OBJECT (HACK)
 		GameObj = this;
 
 	}
@@ -123,7 +134,7 @@ class Game {
 	svgConvert(){
 		var sc = ".INLINE"
 		var $this = this;
-		// console.log('convert svg');
+
 		inlineSVG.init({
 		  svgSelector: sc, // the class attached to all images that should be inlined
 		  initClass: 'js-inlinesvg', // class added to <html>
@@ -131,40 +142,9 @@ class Game {
 		return sc;
 	}
 
-	// === Moves ship based on direction given
-	moveShip(direction){
-
-		var leftPos = this.el.css('left');
-		leftPos = Number(leftPos.replace('px', ''));
-		var multiplier = 0.5;
-		var nextPos;
-
-		if(this.direction === 'still'){
-			this.speed = 0;
-			TweenMax.to(this.el, 1, {rotation: '0'});
-		}
-		else if(this.direction === 'left'){
-			// console.log(this.el.css('left'));
-			this.speed -= multiplier;
-			nextPos = leftPos + this.speed;
-			TweenMax.to(this.el, 1, {rotation: '-45deg'});
-		}
-		else if(this.direction === 'right'){
-			this.speed += multiplier;
-			nextPos = leftPos + this.speed;
-			TweenMax.to(this.el, 1, {rotation: '45deg'});
-		}
-
-		// If the ship has taken off apply the code for moving
-		if(this.takenOff === true){
-			this.el.css({'left': nextPos+'px'});
-		}
-
-	}
 
 	// ==== RESET ELEMENT POSITIONS
 
-	// === Sets ship in initial position
 	setShip(){
 		TweenMax.set(this.el, {top:($(window).height() - 80), left:'20%'})
 		// TweenMax.set(this.el, {scale: 0.6});
@@ -174,6 +154,40 @@ class Game {
 
 
 	// ==== Direction
+
+	moveShip(direction){
+
+		var leftPos = this.el.css('left');
+		leftPos = Number(leftPos.replace('px', ''));
+		var multiplier = 0.5;
+		var nextPos;
+
+		// STILL
+		if(this.direction === 'still'){
+			this.speed = 0;
+			TweenMax.to(this.el, 1, {rotation: '0'});
+		}
+
+		// LEFT
+		else if(this.direction === 'left'){
+			this.speed -= multiplier;
+			nextPos = leftPos + this.speed;
+			TweenMax.to(this.el, 1, {rotation: '-45deg'});
+		}
+
+		// RIGHT
+		else if(this.direction === 'right'){
+			this.speed += multiplier;
+			nextPos = leftPos + this.speed;
+			TweenMax.to(this.el, 1, {rotation: '45deg'});
+		}
+
+		// MOVE SHIP ANIMATION
+		if(this.takenOff === true){
+			this.el.css({'left': nextPos+'px'});
+		}
+
+	}
 
 	left(){
 		this.direction = 'left';
@@ -194,33 +208,47 @@ class Game {
 	}
 
 	takeOff(){
+		console.log('TAKEOFF!');
 		var $this = this;
-		var colors = {top:"blue", bottom:"yellow"};
-		var tl = new TimelineMax({onComplete: function(){
-			console.log('Completed')
-			$this.takenOff = true;
-		}})
+		$this.takenOff = true;
 
-		tl
-			.addLabel('BEGIN')
-			.to(this.el, 1, {top: (this.getwinH() - 130)})
-			.to(this.el, 1, {left: (this.getwinW() - (this.getwinW() / 2))});
-			// .to(this.el, 1, {top: (this.getwinH() - 180), rotation: 5, left: '300', scale: })
-			// .to(this.el, 5, {top: (this.getwinH() - 400), rocketotation: 45, left: '110%', scale: 3, ease: Back.easeOut.config(1.7)});
-			// .to(this.el, 5, {top: 300, left: '130%', rotation: 45});
+		// Tweenmax version
+		// 	var tl = new TimelineMax({onComplete: function(){}})
 
-		this.dark();
+		// 	tl
+		// 		.addLabel('BEGIN')
+		// 		// .to(this.el, 1, {top: (this.getwinH() - 130), rotation: 45})
+		// 		.to(this.el, 4, {left: (this.getwinW() - (this.getwinW() / 2) + 500), top: this.getwinH() - 600, ease: Circ.easeIn, rotation: 45})
+		// 		.to(this.el, 2, {left: (this.getwinW() - (this.getwinW() / 2)), top: this.getwinH() - 300, ease: Circ.easeIn, rotation: -45})
 
-		// Make the rocket takeoff
-		// TweenMax.to(this.el, 2, {css: {bottom: 100}});
-		
+
+		// ANIME VERSION
+		var path = anime.path('#MOTION_PATH path');
+
+		var motionPath = anime({
+		  targets: '.SHIP',
+		  translateX: path('x'),
+		  translateY: path('y'),
+		  rotate: path('angle'),
+		  easing: 'linear',
+		  duration: 2000,
+		  loop: false
+		});
+
+
+		// console.log(path, motionPath, this.el);
+
+
 	}
 
 	// ==== Update
 
 	update(){
 		// console.log('UPDATE');
-		this.moveShip(this.direction);
+		if(this.gameReady === true){
+			this.moveShip(this.direction);
+		}
+		window.floop();
 	}
 
 	loop(time) {
@@ -228,7 +256,6 @@ class Game {
 		// console.log((time/1000).toFixed(2));
 		// Set request id to undefined so that start can run code
 	    requestId = undefined;
-	    
 	    // doStuff(time)
 	    GameObj.update();
 	    GameObj.start();
@@ -254,36 +281,16 @@ class Game {
 	}
 
 	// === GAME STATES
-
-	// SETINTERVAL
-	// stop(){
-	// 	console.log('GAME HAS STOPPED');
-	// 	clearInterval(this.gameloop);
-	// }
-
-
-	// SETINTERVAL
-	// start(){
-	// 	var $this = this;
-	// 	this.takeOff();
-	// 	this.gameloop = setInterval(function(){
-	// 		$this.update();
-	// 	}, 9);
-	// 	console.log(this.gameloop);
-	// }
-
 	stop() {
-
-		// console.log('Request id on stop: ',requestId, !requestId);
 	    if (requestId) {
 	       window.cancelAnimationFrame(requestId);
 	       requestId = undefined;
+	       this.flame.hide();
 	    }
 	}
 
 	start() {
-
-		// console.log('Request id on start: ',requestId, !requestId);
+		this.flame.show();
 		if(!this.takenOff){
 			this.takeOff();
 		}

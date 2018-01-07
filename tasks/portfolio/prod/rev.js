@@ -9,7 +9,7 @@ gulp.task('rev:prod', () => {
 
     return gulp.src(config.paths.builds.tmp.root + '**')
         .pipe(gulp.dest(config.paths.builds.tmp.root))
-        .pipe(revAll.revision())
+        // .pipe(revAll.revision())
         .pipe(gulp.dest(config.paths.builds.prod.root))
         .on('error', util.log);
 });

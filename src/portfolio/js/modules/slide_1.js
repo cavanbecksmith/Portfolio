@@ -17,7 +17,7 @@ export default{
 		  	".............",
 		  	"......But seriously"
 		  ],
-		  typeSpeed: 40
+		  typeSpeed: 20
 		};
 		var typed = new Typed("#Typed .pointer", options);
 	}

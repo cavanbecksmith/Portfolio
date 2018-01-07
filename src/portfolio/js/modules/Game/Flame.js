@@ -11,14 +11,14 @@ class Flame {
 		    ctx = c.getContext('2d'),
 		    cw = c.width = 300,
 		    ch = c.height = 300,
-		    parts = [],
-		    partCount = 100,   
 		    partsFull = false,    
 		    hueRange = 50,
 		    globalTick = 0,
 		    rand = function(min, max){
 		        return Math.floor( (Math.random() * (max - min + 1) ) + min);
-		    };
+		    },
+		    parts = [],
+		    partCount = 100
 
 		var Part = function(){
 		  this.reset();
@@ -94,25 +94,51 @@ class Flame {
 		  }   
 		};
 		    
-		var clear = function(){
+		window.clear = function(){
 		  ctx.globalCompositeOperation = 'destination-out';
 		  ctx.fillStyle = 'hsla(0, 0%, 0%, .3)';
 		  ctx.fillRect(0, 0, cw, ch);
 		  ctx.globalCompositeOperation = 'lighter';
 		};
 		     
-		var loop = function(){
-		  window.requestAnimFrame(loop, c);
-		  clear();
-		  createParts();
-		  updateParts();
-		  renderParts();
-		  globalTick++;
+		var fpaused = false;
+
+		window.floop = function(type){
+
+			// console.log(type);
+
+			fpaused = type;
+			// window.fpaused = type;
+
+			// if(window.paused == true){
+					// cancelAnimationFrame(window.floop);
+			// }
+			// else{
+				// window.requestAnimFrame(window.floop, c);
+			// }
+			if(fpaused){
+				// window.clear();
+				window.clear();
+				// do{
+				// 	console.log(parts);
+				// 	parts.pop()
+				// }
+				// while(parts > 0)
+
+				console.log(true)
+			}
+			else{
+			  clear();
+			  createParts();
+			  updateParts();
+			  renderParts();
+			  globalTick++;
+			}
 		};
 
-		window.requestAnimFrame=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||function(a){window.setTimeout(a,1E3/60)}}();
+		// window.requestAnimFrame=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||function(a){window.setTimeout(a,1E3/60)}}();
 
-			loop();
+			// window.floop();
 	}
 
 	hide(){
