@@ -1,8 +1,9 @@
-import {TweenMax, Power2, TimelineMax, Back, SlowMo, Circ} from "gsap";
+import {TweenMax, Power2, TimelineMax, Back, SlowMo, Circ, Sine} from "gsap";
 import $ from 'jquery';
 import Granim from 'granim';
 import {Flame} from './Flame';
 import anime from 'animejs';	
+import {Enemy} from './Enemy';
 
 var inlineSVG = require('inline-svg');
 var requestId = undefined;
@@ -21,10 +22,13 @@ class Game {
 
 		// SPACE TIME
 		this.speed = 0;
-		this.width = 100;
 		this.direction = 'none';
 
+		// ROCKET
 		this.rocket = 'img/ship/ship2.svg';
+		this.width = 200;
+		this.height = 200;
+
 		// this.smoke = '../img/ship/smoke.svg';
 		this.boundary = {
 			min: 0,
@@ -56,23 +60,31 @@ class Game {
 		        },
 		        "dark": {
 		            gradients: [
-		                ['#9D50BB', '#6E48AA'],
-		                ['#4776E6', '#8E54E9']
+		                ['#1e528e', '#728a7c'],
+		                // ['#4776E6', '#8E54E9']
 		            ],
 		            // transitionSpeed: 2000,
 		            loop: false
 		        },
-		        "light": {
-		            gradients: [ ['#FF4E50', '#F9D423'] ],
+		        "darker": {
+		            gradients: [
+		                ['#00000c', '#00000d'],
+		                // ['#4776E6', '#8E54E9']
+		            ],
+		            // transitionSpeed: 2000,
 		            loop: false
 		        }
+		        // "light": {
+		        //     gradients: [ ['#FF4E50', '#F9D423'] ],
+		        //     loop: false
+		        // }
 		    }
 		});
 		
 		this.create();
 	}
 
-	// ==== Return an image object
+	// ==== RETURN AN IMAGE OBJECT
 	preloadImage(url)
 	{
 	    var img=new Image();
@@ -83,7 +95,7 @@ class Game {
 	    return img;
 	}
 
-	// ==== Create elements
+	// ==== CREATE ON INIT
 	create(){
 		
 		// Setup Variables, append img to ship container
@@ -92,20 +104,20 @@ class Game {
 
 		// LOAD ROCKET SVG IMAGE
 		var rkt = this.preloadImage(this.rocket);
-		rkt = $(rkt).attr('class', 'INLINE rocket');
+		rkt = $(rkt).attr('class', 'INLINE rocket').css({'width': $this.width, 'height': $this.height});
 
 		// ROCKET CONTAINER
 		var rktContainer = $('<div></div>')
-			.attr({'width': this.width, 'class': 'SHIP'})
-			.css({'width': '100px', 'position': 'absolute', 'transform-origin': 'center, center'});
+			.attr({'class': 'SHIP'})
+			.css({'width': $this.width, 'height': $this.height, 'position': 'absolute', 'left': '20%'});
 
 		var flameCont = $('<canvas id="flame"></canvas>')
 			.css({
 			    'position': 'absolute',
-			    'top': '-50px',
+			    'top': '100px',
+		    	'left': '-51px',
 			    'transform': 'rotate(180deg)',
-			    'width': '300px',
-			    'left': '-100px'
+			    'width': '300px'
 			});
 
 		// Append ship to container and rocket img (SVG) to ship
@@ -118,6 +130,7 @@ class Game {
 		this.svgConvert();
 
 		// Create Flame and hide when created
+		// PASSES IN ID OF CANVAS
 		this.flame = new Flame('flame');
 		this.flame.show();
 
@@ -146,11 +159,55 @@ class Game {
 	// ==== RESET ELEMENT POSITIONS
 
 	setShip(){
-		TweenMax.set(this.el, {top:($(window).height() - 80), left:'20%'})
-		// TweenMax.set(this.el, {scale: 0.6});
+		// Tweenmax version
+		TweenMax.set(this.el, {top:($(window).height() - this.height), left:'40%'})
 	}
 
 	setBackground(){}
+
+	// ==== GRID
+
+	createGrid() {
+		console.log('CREATE GRID');
+
+		var $this = this;
+		var offset = 200;
+		var counter = 0;
+
+		this.keywords = {
+			words: ['Webpack', 'Gulp', 'Grunt', 'ES6', 'SASS', 'CSS3', '3 years Javascript experience', 'TweenMax', 'jQuery', 'CreateJS', 'VueJS', 'AnimeJS', 'Adobe Photoshop', 'Adobe Animate', 'Adobe illustrator', 'Laravel'],
+			gridBoundsR: ($this.getwinW() - offset),
+			gridBoundsL: (offset),
+			gridH: $this.getwinH(),
+			rows: 2,
+			cols: 3,
+			speed:2,
+			spacing: 50,
+			enemies: []
+		};
+
+		var grid = $('<div id="GRID"></div>')
+			.attr({'height':$this.gridH});
+
+		this.container.append(grid);
+
+		var enemy = new Enemy({container: grid, left: 200, top: 200, row: 0, col: 0});
+
+		for(var row=0;row<this.keywords.rows;row++){
+			console.log('ROW:',row);
+			for(var col=0;col<this.keywords.cols; col++){
+				console.log('COL:',col);
+				this.keywords.enemies[counter] = new Enemy({container: grid, left: 200, top: 200, row: 0, col: 0});
+				counter++;
+			}
+		}
+
+	}
+
+
+	updateGrid() {
+
+	}
 
 
 	// ==== Direction
@@ -212,32 +269,39 @@ class Game {
 		var $this = this;
 		$this.takenOff = true;
 
+		console.log(this.height);
+
 		// Tweenmax version
-		// 	var tl = new TimelineMax({onComplete: function(){}})
+		var tl = new TimelineMax({onComplete: function(){}});
 
-		// 	tl
-		// 		.addLabel('BEGIN')
-		// 		// .to(this.el, 1, {top: (this.getwinH() - 130), rotation: 45})
-		// 		.to(this.el, 4, {left: (this.getwinW() - (this.getwinW() / 2) + 500), top: this.getwinH() - 600, ease: Circ.easeIn, rotation: 45})
-		// 		.to(this.el, 2, {left: (this.getwinW() - (this.getwinW() / 2)), top: this.getwinH() - 300, ease: Circ.easeIn, rotation: -45})
+			tl
+				.addLabel('BEGIN')
 
 
-		// ANIME VERSION
-		var path = anime.path('#MOTION_PATH path');
 
-		var motionPath = anime({
-		  targets: '.SHIP',
-		  translateX: path('x'),
-		  translateY: path('y'),
-		  rotate: path('angle'),
-		  easing: 'linear',
-		  duration: 2000,
-		  loop: false
-		});
-
-
-		// console.log(path, motionPath, this.el);
-
+			// STRAIGHLINE
+			.to([$('.arrow'), $('#SpaceBar')], 1, {opacity: 0})
+			.to(this.el, 1, {scaleY: 0.75}, 'BEGIN')
+			.addLabel('SPRING')
+			.add(function(){
+				$this.dark();
+			})
+			// INITIAL SPRING JUMP
+			.to(this.el,1,{scaleY: 1.25}, 'SPRING')
+			.to(this.el,1,{scaleY: 1})
+			.to(this.el,2,{top: (0 - this.height + 200)}, 'SPRING')
+			// TURN SCREEN TO BLACK
+			.addLabel('PITCH_BLACK')
+			.add(function(){
+				$this.darker();
+			}, 'PITCH_BLACK -=1.5')
+			.to('.props', 2, {top: $this.getwinH()}, 'PITCH_BLACK -=2')
+			.to(this.el, 1, {top: '70%', scaleY: 1, ease: Sine.easeOut})
+			.add(function(){
+				$this.createGrid();
+				// SET TO TRUE AFTER GRID SETUP
+				$this.gameReady = true;
+			})
 
 	}
 
@@ -276,8 +340,12 @@ class Game {
 		this.gradient.changeState('dark');
 	}
 
-	light(){
+	darker(){
+		this.gradient.changeState('darker');
+	}
 
+	light(){
+		this.gradient.changeState('default-state');
 	}
 
 	// === GAME STATES
@@ -299,6 +367,8 @@ class Game {
 	       requestId = window.requestAnimationFrame(this.loop);
 	    }
 	}
+
+	gameOver(){}
 
 
 	reset(){}

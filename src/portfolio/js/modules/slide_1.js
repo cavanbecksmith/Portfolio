@@ -11,7 +11,6 @@ export default{
 		  	"all about innovation", "A skilled rocket league player 🎮", 
 		  	"Enthusiastic in using new technologies such as Webpack",
 		  	"And a part time comedian", 
-		  	"Did I get the job? 💁‍♂️",
 		  	"Just kidding! hahaha",
 		  	".............",
 		  	".............",
