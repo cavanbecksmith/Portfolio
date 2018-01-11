@@ -72,45 +72,45 @@ export default{
 		});
 	},
 
-	applyBlur(){
-		var blur = 5;
-		$('.Slide2 div').each(function(){
-			if($(this).hasClass('NOBLUR') || $(this).hasClass('next') || $(this).hasClass('previous')){	
-			}else{
-				$(this).css('filter', 'blur('+blur+'px)')
-			}
-		})
-	},
+	// applyBlur(){
+	// 	var blur = 5;
+	// 	$('.Slide2 div').each(function(){
+	// 		if($(this).hasClass('NOBLUR') || $(this).hasClass('next') || $(this).hasClass('previous')){	
+	// 		}else{
+	// 			$(this).css('filter', 'blur('+blur+'px)')
+	// 		}
+	// 	})
+	// },
 
-	removeBlur(){
+	// removeBlur(){
 
-		var blur = this.blur;
-		var el;
+	// 	var blur = this.blur;
+	// 	var el;
 
-		$('.Slide2 div').each(function(){
-			if($(this).hasClass('NOBLUR') || $(this).hasClass('next') || $(this).hasClass('previous')){	
-			}else{
-				el = $(this)
-				TweenMax.to(blur, 2, {a:0, onUpdate:applyBlur});
-			}
-		});
+	// 	$('.Slide2 div').each(function(){
+	// 		if($(this).hasClass('NOBLUR') || $(this).hasClass('next') || $(this).hasClass('previous')){	
+	// 		}else{
+	// 			el = $(this)
+	// 			TweenMax.to(blur, 2, {a:0, onUpdate:applyBlur});
+	// 		}
+	// 	});
 
 
-		function applyBlur()
-		{
-		    TweenMax.set(el, {webkitFilter:"blur(" + blur.a + "px)",filter:"blur(" + blur.a + "px)"});  
-		};
+	// 	function applyBlur()
+	// 	{
+	// 	    TweenMax.set(el, {webkitFilter:"blur(" + blur.a + "px)",filter:"blur(" + blur.a + "px)"});  
+	// 	};
 
-		// TweenMax.to(blurElement, 1, {a:10, onUpdate: applyBlur});
+	// 	// TweenMax.to(blurElement, 1, {a:10, onUpdate: applyBlur});
 
-		// function applyBlur()
-		// {
-		// 	console.log(this);
-		//     // TweenLite.set(element, {webkitFilter:"blur(" + element.blur + "px)"});	
-		// }
+	// 	// function applyBlur()
+	// 	// {
+	// 	// 	console.log(this);
+	// 	//     // TweenLite.set(element, {webkitFilter:"blur(" + element.blur + "px)"});	
+	// 	// }
 
-		// TweenMax.to('.SHIP', 0, {blurFilter:{remove:true}});
+	// 	// TweenMax.to('.SHIP', 0, {blurFilter:{remove:true}});
 
-	}
+	// }
 
 }

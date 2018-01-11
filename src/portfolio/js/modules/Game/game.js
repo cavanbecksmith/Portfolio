@@ -1,8 +1,8 @@
-import {TweenMax, Power2, TimelineMax, Back, SlowMo, Circ, Sine} from "gsap";
+import {TweenMax, TimelineMax, Sine} from "gsap";
 import $ from 'jquery';
 import Granim from 'granim';
 import {Flame} from './Flame';
-import anime from 'animejs';	
+// import anime from 'animejs';	
 import {Enemy} from './Enemy';
 
 var inlineSVG = require('inline-svg');
@@ -12,7 +12,10 @@ var GameObj;
 class Game {
 
 	constructor(container){
-		window.g = this;
+
+		// window.g = this;
+		var $this = this;
+
 		console.log('================')
 		console.log('SHIP CONSTRUCTOR')
 
@@ -81,7 +84,20 @@ class Game {
 		    }
 		});
 		
+		this.keywords = {
+			words: ['Webpack', 'Gulp', 'Grunt', 'ES6', 'SASS', 'CSS3', '3 years Javascript experience', 'TweenMax', 'jQuery', 'CreateJS', 'VueJS', 'AnimeJS', 'Adobe Photoshop', 'Adobe Animate', 'Adobe illustrator', 'Laravel'],
+			// gridBoundsR: ($this.getwinW() - 200),
+			// gridBoundsL: (offset),
+			gridH: this.getwinH(),
+			rows: 2,
+			cols: 3,
+			speed:2,
+			spacing: 50,
+			enemies: []
+		};
+
 		this.create();
+	 	console.log('===========');
 	}
 
 	// ==== RETURN AN IMAGE OBJECT
@@ -89,9 +105,6 @@ class Game {
 	{
 	    var img=new Image();
 	    img.src=url;
-
-	    console.log(img);
-
 	    return img;
 	}
 
@@ -168,23 +181,12 @@ class Game {
 	// ==== GRID
 
 	createGrid() {
+		console.log('===========');
 		console.log('CREATE GRID');
 
 		var $this = this;
 		var offset = 200;
 		var counter = 0;
-
-		this.keywords = {
-			words: ['Webpack', 'Gulp', 'Grunt', 'ES6', 'SASS', 'CSS3', '3 years Javascript experience', 'TweenMax', 'jQuery', 'CreateJS', 'VueJS', 'AnimeJS', 'Adobe Photoshop', 'Adobe Animate', 'Adobe illustrator', 'Laravel'],
-			gridBoundsR: ($this.getwinW() - offset),
-			gridBoundsL: (offset),
-			gridH: $this.getwinH(),
-			rows: 2,
-			cols: 3,
-			speed:2,
-			spacing: 50,
-			enemies: []
-		};
 
 		var grid = $('<div id="GRID"></div>')
 			.attr({'height':$this.gridH});
@@ -194,14 +196,14 @@ class Game {
 		var enemy = new Enemy({container: grid, left: 200, top: 200, row: 0, col: 0});
 
 		for(var row=0;row<this.keywords.rows;row++){
-			console.log('ROW:',row);
 			for(var col=0;col<this.keywords.cols; col++){
-				console.log('COL:',col);
-				this.keywords.enemies[counter] = new Enemy({container: grid, left: 200, top: 200, row: 0, col: 0});
+				this.keywords.enemies.push(new Enemy({container: grid, left: 200, top: 200, row: row, col: col, text: this.keywords.words[counter], max_col: this.keywords.cols, max_row: this.keywords.rows}));
 				counter++;
+				// console.log(counter, this.keywords.enemies);
+
 			}
 		}
-
+		console.log('===========');
 	}
 
 
@@ -265,6 +267,7 @@ class Game {
 	}
 
 	takeOff(){
+		console.log('===========');
 		console.log('TAKEOFF!');
 		var $this = this;
 		$this.takenOff = true;
@@ -302,7 +305,7 @@ class Game {
 				// SET TO TRUE AFTER GRID SETUP
 				$this.gameReady = true;
 			})
-
+		console.log('===========');
 	}
 
 	// ==== Update
