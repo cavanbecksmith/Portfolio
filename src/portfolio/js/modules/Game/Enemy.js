@@ -1,12 +1,14 @@
 import $ from 'jquery';
+import {TweenMax} from 'gsap';
 
 class Enemy {
 	constructor(obj){
 
 		// OBJECT VARIABLES
 		this.container = obj.container;
-		this.left = obj.left;
-		this.top = obj.top;
+		this.el = null;
+		// this.left = obj.left;
+		// this.top = obj.top;
 		this.row = obj.row;
 		this.col = obj.col;
 		this.text = obj.text;
@@ -27,6 +29,7 @@ class Enemy {
 		
 		// CREATES ENEMY CONTAINER
 		this.el = $('<div class="ENEMY"></div>')
+			.attr({'data-row': this.row, 'data-col': this.col})
 			.css({'position': 'absolute', 'left': this.left})
 			.css({'background': 'white', 'width': this.width, 'height': this.height});
 
@@ -39,12 +42,19 @@ class Enemy {
 	}
 
 	positionEnemy(col, max_col){
-
-		// DIVIDE THE COL BY THE MAX AMMOUNT OF COLLUMNS
-		// INCLUDE WIDTH / 2 IN THE EQUATIOn
-
-		console.log('MAX_COL: ',max_col, 'COL: ', col)
-		// console.log((col+1), (max_col + 1));
+		console.log('===========');
+		console.log('ENEMY', ' Col: ', col, 'Row: ', this.row);
+		var height = $(window).height();
+		var width = $(this.container).width();
+		col = col+1;
+		max_col = max_col+1;
+		var percentage = (width) * (col / max_col)
+		percentage = percentage - (this.width * 4)
+		TweenMax.set(this.el, {left: (percentage)});
+		// console.log('COL', col, ' MAX_C', max_col)
+		// console.log('RESULT: ', col / (max_col));
+		// console.log((col), (max_col), height);
+		// console.log('===========');
 	}
 
 	// Checks to see if a bullet has hit the label
@@ -69,7 +79,11 @@ class Enemy {
 	}
 
 	update(){
-		this.hit();
+		// HIT CHECK
+		// this.hit();
+
+		// MOVE IN CORRECT DIRECTION
+		
 
 	}
 

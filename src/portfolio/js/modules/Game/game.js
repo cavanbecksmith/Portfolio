@@ -13,7 +13,9 @@ class Game {
 
 	constructor(container){
 
+		// === FOR DEBUGGING
 		// window.g = this;
+
 		var $this = this;
 
 		console.log('================')
@@ -77,20 +79,14 @@ class Game {
 		            // transitionSpeed: 2000,
 		            loop: false
 		        }
-		        // "light": {
-		        //     gradients: [ ['#FF4E50', '#F9D423'] ],
-		        //     loop: false
-		        // }
 		    }
 		});
 		
 		this.keywords = {
-			words: ['Webpack', 'Gulp', 'Grunt', 'ES6', 'SASS', 'CSS3', '3 years Javascript experience', 'TweenMax', 'jQuery', 'CreateJS', 'VueJS', 'AnimeJS', 'Adobe Photoshop', 'Adobe Animate', 'Adobe illustrator', 'Laravel'],
-			// gridBoundsR: ($this.getwinW() - 200),
-			// gridBoundsL: (offset),
+			words: ['Webpack', 'Gulp', 'Grunt', 'ES6', 'SASS', 'CSS3', 'Javascript', 'TweenMax', 'jQuery', 'CreateJS', 'VueJS', 'AnimeJS', 'Adobe Photoshop', 'Adobe Animate', 'Adobe illustrator', 'Laravel'],
 			gridH: this.getwinH(),
 			rows: 2,
-			cols: 3,
+			cols: 5,
 			speed:2,
 			spacing: 50,
 			enemies: []
@@ -189,18 +185,23 @@ class Game {
 		var counter = 0;
 
 		var grid = $('<div id="GRID"></div>')
-			.attr({'height':$this.gridH});
+			.attr({'height':$this.gridH})
+			.css({'width': '100%', 'height': '100%', 'padding': '0 5%', 'box-sizing': 'border-box'});
 
+		var grid_container = $('<div class="GRID_CONTAINER"></div>')
+		.css({'position': 'relative'});
+		grid.append(grid_container);
 		this.container.append(grid);
 
-		var enemy = new Enemy({container: grid, left: 200, top: 200, row: 0, col: 0});
 
-		for(var row=0;row<this.keywords.rows;row++){
-			for(var col=0;col<this.keywords.cols; col++){
-				this.keywords.enemies.push(new Enemy({container: grid, left: 200, top: 200, row: row, col: col, text: this.keywords.words[counter], max_col: this.keywords.cols, max_row: this.keywords.rows}));
+		// var enemy = new Enemy({container: grid, left: 200, top: 200, row: 0, col: 0});
+
+		for(var row=0;row<=this.keywords.rows;row++){
+			for(var col=0;col<=this.keywords.cols; col++){
+				this.keywords.enemies.push(new Enemy({container: grid_container, row: row, col: col, text: this.keywords.words[counter], max_col: this.keywords.cols, max_row: this.keywords.rows}));
+				this.keywords.enemies[counter].create();
+				// console.log('ENEMY: ', this.keywords.enemies[counter]);
 				counter++;
-				// console.log(counter, this.keywords.enemies);
-
 			}
 		}
 		console.log('===========');
@@ -299,12 +300,14 @@ class Game {
 				$this.darker();
 			}, 'PITCH_BLACK -=1.5')
 			.to('.props', 2, {top: $this.getwinH()}, 'PITCH_BLACK -=2')
-			.to(this.el, 1, {top: '70%', scaleY: 1, ease: Sine.easeOut})
+			.to(this.el, 3, {top: '70%', scaleY: 1, ease: Sine.easeOut})
 			.add(function(){
-				$this.createGrid();
+				
+
 				// SET TO TRUE AFTER GRID SETUP
 				$this.gameReady = true;
 			})
+		$this.createGrid();
 		console.log('===========');
 	}
 
