@@ -6,11 +6,15 @@ import {TweenMax, Power2, TimelineLite} from "gsap";
 import slide1 from './modules/slide_1';
 import slide2 from './modules/slide_2';
 
+// ===== HELPERS
+import {Helpers} from './modules/Helpers';
+
+Helpers();
+
 var App = {
 	currentSlide: 1,
 	// nextSlide: 0,
 	slideLen: 0,
-	$this: this,
 	init(){
 		// SETUP
 		App.disableScroll();
@@ -200,7 +204,6 @@ var App = {
 
 		// APPEND THE ARROWS TO EACH SLIDE
 		$('.slide').each(function(){
-
 			$(this).append(next.clone());
 			$(this).append(previous.clone());
 			App.fadeIn($(this).find('.next'));

@@ -4,6 +4,9 @@ import {TweenMax} from 'gsap';
 class Enemy {
 	constructor(obj){
 
+		// === DEBUG
+		window.enemy = this;
+
 		// OBJECT VARIABLES
 		this.container = obj.container;
 		this.el = null;
@@ -21,8 +24,9 @@ class Enemy {
 		this.height = 50;
 
 		// CREATE
-		// this.create();
 		this.ishit = false;
+		this.update = null;
+
 	}
 
 	create(){
@@ -42,8 +46,8 @@ class Enemy {
 	}
 
 	positionEnemy(col, max_col){
-		console.log('===========');
-		console.log('ENEMY', ' Col: ', col, 'Row: ', this.row);
+		// console.log('===========');
+		// console.log('ENEMY', ' Col: ', col, 'Row: ', this.row);
 		var height = $(window).height();
 		var width = $(this.container).width();
 		col = col+1;
@@ -51,10 +55,6 @@ class Enemy {
 		var percentage = (width) * (col / max_col)
 		percentage = percentage - (this.width * 4)
 		TweenMax.set(this.el, {left: (percentage)});
-		// console.log('COL', col, ' MAX_C', max_col)
-		// console.log('RESULT: ', col / (max_col));
-		// console.log((col), (max_col), height);
-		// console.log('===========');
 	}
 
 	// Checks to see if a bullet has hit the label
@@ -70,7 +70,11 @@ class Enemy {
 
 	// MOVERIGHT
 	moveright(){
-
+		var pos = this.el.css('left');
+		pos = pos.replace('px', '');
+		pos += 0.1;
+		this.el.css('background', pos+'px');
+		console.log(pos);
 	}
 
 	// MOVELEFT

@@ -3,7 +3,7 @@ import $ from 'jquery';
 import Granim from 'granim';
 import {Flame} from './Flame';
 // import anime from 'animejs';	
-import {Enemy} from './Enemy';
+import {Enemy} from './EnemyLinear';
 
 var inlineSVG = require('inline-svg');
 var requestId = undefined;
@@ -14,12 +14,12 @@ class Game {
 	constructor(container){
 
 		// === FOR DEBUGGING
-		// window.g = this;
+		window.g = this;
 
 		var $this = this;
 
-		console.log('================')
-		console.log('SHIP CONSTRUCTOR')
+		// console.log('================')
+		// console.log('SHIP CONSTRUCTOR')
 
 		// Elements
 		this.container = container;
@@ -84,14 +84,12 @@ class Game {
 		
 		this.keywords = {
 			words: ['Webpack', 'Gulp', 'Grunt', 'ES6', 'SASS', 'CSS3', 'Javascript', 'TweenMax', 'jQuery', 'CreateJS', 'VueJS', 'AnimeJS', 'Adobe Photoshop', 'Adobe Animate', 'Adobe illustrator', 'Laravel'],
-			gridH: this.getwinH(),
-			rows: 2,
-			cols: 5,
-			speed:2,
-			spacing: 50,
-			enemies: []
+			// gridH: this.getwinH(),
+			// speed:2,
+			// spacing: 50,
 		};
-
+		this.enemyInterval = 0.5;
+		this.enemyReady = false;
 		this.create();
 	 	console.log('===========');
 	}
@@ -177,8 +175,8 @@ class Game {
 	// ==== GRID
 
 	createGrid() {
-		console.log('===========');
-		console.log('CREATE GRID');
+		// console.log('===========');
+		// console.log('CREATE GRID');
 
 		var $this = this;
 		var offset = 200;
@@ -186,7 +184,7 @@ class Game {
 
 		var grid = $('<div id="GRID"></div>')
 			.attr({'height':$this.gridH})
-			.css({'width': '100%', 'height': '100%', 'padding': '0 5%', 'box-sizing': 'border-box'});
+			.css({'width': '100%', 'height': '100%', 'padding': '0%', 'box-sizing': 'border-box'});
 
 		var grid_container = $('<div class="GRID_CONTAINER"></div>')
 		.css({'position': 'relative'});
@@ -194,22 +192,28 @@ class Game {
 		this.container.append(grid);
 
 
-		// var enemy = new Enemy({container: grid, left: 200, top: 200, row: 0, col: 0});
+		// SOLUTION 2
 
-		for(var row=0;row<=this.keywords.rows;row++){
-			for(var col=0;col<=this.keywords.cols; col++){
-				this.keywords.enemies.push(new Enemy({container: grid_container, row: row, col: col, text: this.keywords.words[counter], max_col: this.keywords.cols, max_row: this.keywords.rows}));
-				this.keywords.enemies[counter].create();
-				// console.log('ENEMY: ', this.keywords.enemies[counter]);
-				counter++;
-			}
-		}
-		console.log('===========');
+
+		// SOLUTION 1: FOR CREATING A GRID AND MOVING
+		// for(var row=0;row<=this.keywords.rows;row++){
+		// 	for(var col=0;col<=this.keywords.cols; col++){
+		// 		this.keywords.enemies.push(new Enemy({container: grid_container, row: row, col: col, text: this.keywords.words[counter], max_col: this.keywords.cols, max_row: this.keywords.rows}));
+		// 		this.keywords.enemies[counter].create();
+		// 		counter++;
+		// 	}
+		// }
+		// console.log('===========');
 	}
 
+	createEnemy(){
+		new Enemy({container: this.container, text: this.keywords.words.randomElement()});
+	}
 
-	updateGrid() {
-
+	moveGrid() {
+		for(var i = 0; i < this.keywords.enemies.length; i++){
+			this.keywords.enemies[i].moveright();
+		}
 	}
 
 
@@ -317,13 +321,30 @@ class Game {
 		// console.log('UPDATE');
 		if(this.gameReady === true){
 			this.moveShip(this.direction);
+			// this.moveGrid();
 		}
 		window.floop();
 	}
 
 	loop(time) {
+		// SINCE THE LOOP DOESNT HAVE THIS BINDED
+		// WE HAVE TO USE THE 'GameObj' INSTEAD
 
-		// console.log((time/1000).toFixed(2));
+		// console.log((time/1000).toFixed(0));
+		// console.log((time/1000).toFixed(0) % GameObj.enemyInterval !== 0)
+
+		// EVERY 3 SECONDS CREATE A NEW ENEMY
+		if((time/1000).toFixed(1) % GameObj.enemyInterval != 0 && GameObj.enemyReady == false){
+			// console.log('NOW IM READY');
+			GameObj.enemyReady = true;	
+		}
+		// CREATE NEW ENEMY HERE
+		else if(((time/1000).toFixed(1) % GameObj.enemyInterval) === 0 && GameObj.enemyReady == true){
+			GameObj.createEnemy();
+			GameObj.enemyReady = false;
+		}
+
+
 		// Set request id to undefined so that start can run code
 	    requestId = undefined;
 	    // doStuff(time)
@@ -332,7 +353,7 @@ class Game {
 	}
 
 
-	// ==== return widths and heights
+	// ==== Helper widths and heights functions
 	getwinH(e){
 		return $(window).height();
 	}
