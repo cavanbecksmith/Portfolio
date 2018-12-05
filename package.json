@@ -5,7 +5,8 @@
   "main": "src/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "gulp dev"
+    "dev": "gulp dev",
+    "deploy": "push-dir --dir=dist --branch=gh-pages"
   },
   "author": "Cavan Becksmith",
   "license": "MIT",
@@ -30,6 +31,7 @@
     "gulp-webserver": "^0.9.1",
     "inline-svg": "^2.2.3",
     "node-sass": "^4.5.1",
+    "push-dir": "^0.4.1",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.16.0",
     "typed.js": "^2.0.9",
