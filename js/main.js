@@ -18103,18 +18103,16 @@ function PrototypeRandomElement() {
 PrototypeRandomElement();
 
 var App = {
-	currentSlide: 1,
-	// nextSlide: 0,
+	currentSlide: 0,
 	slideLen: 0,
 	init() {
-		// SETUP
 		App.disableScroll();
 		App.preload();
 	},
 	preload() {
 		inlineSVG.init({
-			svgSelector: '.SVG', // the class attached to all images that should be inlined
-			initClass: 'inlinesvg' // class added to <html>
+			svgSelector: '.SVG',
+			initClass: 'inlinesvg'
 		}, function () {
 			App.start();
 		});
@@ -18126,6 +18124,11 @@ var App = {
 
 		__WEBPACK_IMPORTED_MODULE_2__modules_slide_1__["a" /* default */].init();
 		__WEBPACK_IMPORTED_MODULE_3__modules_slide_2__["a" /* default */].init();
+
+		setTimeout(function () {
+			console.log('Typed');
+			console.log(__WEBPACK_IMPORTED_MODULE_2__modules_slide_1__["a" /* default */].typed);
+		});
 	},
 	previousSlide(thisSlide, nextSlide, lastSlide) {
 
@@ -18142,11 +18145,7 @@ var App = {
 		tl
 
 		// SET Z-INDEX and ready positions
-		.set(nextSlide, { css: { left: -window_w - offset, zIndex: 1, scale: scale } }).set(thisSlide, { css: { zIndex: -1 } })
-
-		// Apply transformations
-		// START
-		.addLabel('Start').to(thisSlide, time, { css: { scale: scale } }).addLabel('MID').to(thisSlide, 1, { css: { left: window_w + offset } }, 'MID').to(nextSlide, 1, { css: { left: 0 } }, 'MID').to(nextSlide, time, { css: { left: 0, scale: 1 } });
+		.set(nextSlide, { css: { left: -window_w - offset, zIndex: 1, scale: scale } }).set(thisSlide, { css: { zIndex: -1 } }).addLabel('Start').to(thisSlide, time, { css: { scale: scale } }).addLabel('MID').to(thisSlide, 1, { css: { left: window_w + offset } }, 'MID').to(nextSlide, 1, { css: { left: 0 } }, 'MID').to(nextSlide, time, { css: { left: 0, scale: 1 } });
 
 		if (lastSlide === false) {
 			App.currentSlide--;
@@ -19060,11 +19059,15 @@ var TweenMaxBase = TweenMax;
 		this.typeText();
 	},
 	typeText: function () {
-		var options = {
-			strings: ["A Passionate web developer <br/> 😁 + 🖥 = 💰", "all about innovation", "A skilled rocket league player 🎮", "Enthusiastic in using new technologies such as Webpack", "And a part time comedian", "Just kidding! hahaha", ".............", ".............", "......But seriously"],
-			typeSpeed: 20
+		let options = {
+			stringsElement: '#typed-strings',
+			typeSpeed: 30,
+			backSpeed: 0,
+			backDelay: 500,
+			startDelay: 1000,
+			loop: true
 		};
-		var typed = new __WEBPACK_IMPORTED_MODULE_0_typed_js___default.a("#Typed .pointer", options);
+		this.typed = new __WEBPACK_IMPORTED_MODULE_0_typed_js___default.a("#Typed .pointer", options);
 	}
 });
 
@@ -20197,9 +20200,6 @@ var TweenMaxBase = TweenMax;
 			$this.game.still();
 		});
 		__WEBPACK_IMPORTED_MODULE_0_jquery___default()('body').on("keydown", function (event) {
-			// if($this.playing){
-
-			// console.log(event.type + ": " +  event.which);
 
 			// ==== KEYCODES
 			// W
@@ -20225,13 +20225,9 @@ var TweenMaxBase = TweenMax;
 						else if (Number(event.which) == 32) {}
 							// console.log('SPACEBAR pressed');
 
-							// }
-							// RESET POSITIONS HERE
-							// else{}
 
 							// ENTER
 			if (Number(event.which) == 13) {
-				// console.log('ENTER pressed');
 				$this.playing = true;
 				$this.game.start();
 			}
@@ -20265,9 +20261,6 @@ var GameObj;
 class Game {
 
 	constructor(container) {
-
-		// === FOR DEBUGGING
-		window.g = this;
 
 		var $this = this;
 
@@ -20322,18 +20315,14 @@ class Game {
 		this.enemyInterval = 0.5;
 		this.enemyReady = false;
 		this.create();
-
-		console.log('===========');
 	}
 
-	// ==== RETURN AN IMAGE OBJECT
 	preloadImage(url) {
 		var img = new Image();
 		img.src = url;
 		return img;
 	}
 
-	// ==== CREATE ON INIT
 	create() {
 
 		var $this = this;
@@ -21789,26 +21778,9 @@ class Flame {
 
 		window.floop = function (type) {
 
-			// console.log(type);
-
 			fpaused = type;
-			// window.fpaused = type;
-
-			// if(window.paused == true){
-			// cancelAnimationFrame(window.floop);
-			// }
-			// else{
-			// window.requestAnimFrame(window.floop, c);
-			// }
 			if (fpaused) {
-				// window.clear();
 				window.clear();
-				// do{
-				// 	console.log(parts);
-				// 	parts.pop()
-				// }
-				// while(parts > 0)
-
 				console.log(true);
 			} else {
 				clear();
