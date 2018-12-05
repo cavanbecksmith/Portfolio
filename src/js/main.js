@@ -13,18 +13,16 @@ PrototypeRandomElement();
 
 
 var App = {
-	currentSlide: 1,
-	// nextSlide: 0,
+	currentSlide: 0,
 	slideLen: 0,
 	init(){
-		// SETUP
 		App.disableScroll();
 		App.preload();
 	},
 	preload(){
 		inlineSVG.init({
-		  svgSelector: '.SVG', // the class attached to all images that should be inlined
-		  initClass: 'inlinesvg', // class added to <html>
+		  svgSelector: '.SVG', 
+		  initClass: 'inlinesvg', 
 		}, function () {
 			App.start();
 		});
@@ -36,6 +34,12 @@ var App = {
 
 		slide1.init();
 		slide2.init();
+
+		setTimeout(function(){
+			console.log('Typed');
+			console.log(slide1.typed);	
+		})
+	
 	},
 	previousSlide(thisSlide, nextSlide, lastSlide){
 
@@ -55,8 +59,6 @@ var App = {
 			.set(nextSlide, {css: {left: (-window_w - offset), zIndex: 1, scale: scale}})
 			.set(thisSlide, {css: {zIndex: -1}})
 
-			// Apply transformations
-			// START
 			.addLabel('Start')
 			.to(thisSlide, time, {css: {scale:scale}})
 

@@ -23,9 +23,6 @@ export default{
 			$this.game.still();
 		});
 		$('body').on( "keydown", function( event ) {
-			// if($this.playing){
-				
-				// console.log(event.type + ": " +  event.which);
 
 				// ==== KEYCODES
 				// W
@@ -51,13 +48,9 @@ export default{
 				else if(Number(event.which) == 32){
 					// console.log('SPACEBAR pressed');
 				}
-			// }
-			// RESET POSITIONS HERE
-			// else{}
 
 			// ENTER
 			if(Number(event.which) == 13){
-				// console.log('ENTER pressed');
 				$this.playing = true;
 				$this.game.start();
 			}

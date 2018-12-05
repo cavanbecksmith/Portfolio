@@ -105,26 +105,9 @@ class Flame {
 
 		window.floop = function(type){
 
-			// console.log(type);
-
 			fpaused = type;
-			// window.fpaused = type;
-
-			// if(window.paused == true){
-					// cancelAnimationFrame(window.floop);
-			// }
-			// else{
-				// window.requestAnimFrame(window.floop, c);
-			// }
 			if(fpaused){
-				// window.clear();
 				window.clear();
-				// do{
-				// 	console.log(parts);
-				// 	parts.pop()
-				// }
-				// while(parts > 0)
-
 				console.log(true)
 			}
 			else{

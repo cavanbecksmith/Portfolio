@@ -5,19 +5,14 @@ export default{
 		this.typeText();
 	},
 	typeText: function(){
-		var options = {
-		  strings: [
-		  	"A Passionate web developer <br/> 😁 + 🖥 = 💰", 
-		  	"all about innovation", "A skilled rocket league player 🎮", 
-		  	"Enthusiastic in using new technologies such as Webpack",
-		  	"And a part time comedian", 
-		  	"Just kidding! hahaha",
-		  	".............",
-		  	".............",
-		  	"......But seriously"
-		  ],
-		  typeSpeed: 20
-		};
-		var typed = new Typed("#Typed .pointer", options);
+		let options = {
+		    stringsElement: '#typed-strings',
+		    typeSpeed: 30,
+		    backSpeed: 0,
+		    backDelay: 500,
+		    startDelay: 1000,
+		    loop: true,
+	  	};
+		this.typed = new Typed("#Typed .pointer", options);
 	}
 }

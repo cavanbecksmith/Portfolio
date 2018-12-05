@@ -12,9 +12,6 @@ class Game {
 
 	constructor(container){
 
-		// === FOR DEBUGGING
-		window.g = this;
-
 		var $this = this;
 
 		// Elements
@@ -74,11 +71,8 @@ class Game {
 		this.enemyInterval = 0.5;
 		this.enemyReady = false;
 		this.create();
-
-	 	console.log('===========');
 	}
 
-	// ==== RETURN AN IMAGE OBJECT
 	preloadImage(url)
 	{
 	    var img=new Image();
@@ -86,7 +80,6 @@ class Game {
 	    return img;
 	}
 
-	// ==== CREATE ON INIT
 	create(){
 		
 		var $this = this;
