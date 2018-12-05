@@ -1,0 +1,15 @@
+{
+	"animations": {
+		"title": "example glossary",
+		"fade": {
+			"in": {
+				"autoAlpha": 1,
+				"display": "block"
+			},
+			"set": {
+				"autoAlpha": 0,
+				"display": "block"
+			}
+		}
+	}
+}

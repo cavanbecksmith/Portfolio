@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700,900");
+.typed-cursor {
+  opacity: 1;
+  animation: typedjsBlink 0.7s infinite;
+  -webkit-animation: typedjsBlink 0.7s infinite;
+  animation: typedjsBlink 0.7s infinite; }
+
+@keyframes typedjsBlink {
+  50% {
+    opacity: 0.0; } }
+
+@-webkit-keyframes typedjsBlink {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: 0.0; }
+  100% {
+    opacity: 1; } }
+
+.typed-fade-out {
+  opacity: 0;
+  transition: opacity .25s;
+  -webkit-animation: 0;
+  animation: 0; }
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+
+@keyframes smoke_size {
+  0% {
+    transform: scale(0.25); }
+  20% {
+    transform: scale(0.5); }
+  40% {
+    transform: scale(0.75); }
+  60% {
+    transform: scale(1); }
+  80% {
+    transform: scale(0.75); }
+  90% {
+    transform: scale(0.5); }
+  100% {
+    transform: scale(0.25); } }
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: black; }
+
+#Wrapper .slide {
+  width: 100vw;
+  height: 100vh;
+  display: table;
+  position: absolute; }
+  #Wrapper .slide .center {
+    margin: 0 auto;
+    display: inline-block;
+    vertical-align: middle;
+    display: table-cell;
+    text-align: center;
+    padding: 0 60px; }
+    #Wrapper .slide .center .block {
+      margin: 0 auto;
+      max-width: 900px; }
+      #Wrapper .slide .center .block h1 {
+        font-size: 62px;
+        color: white;
+        font-weight: bold;
+        font-family: unset;
+        letter-spacing: -6px;
+        word-spacing: 11px; }
+      #Wrapper .slide .center .block h2 {
+        font-size: 42px;
+        color: #FFF; }
+
+#Wrapper .arrow {
+  top: 43%;
+  position: absolute;
+  cursor: pointer; }
+
+#Wrapper .arrow.next {
+  position: absolute; }
+
+#Wrapper .arrow.previous {
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1); }
+
+#Wrapper .Slide1 {
+  box-sizing: border-box; }
+  #Wrapper .Slide1 .london {
+    background: url("../img/london_eye.jpg");
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    z-index: -1; }
+  #Wrapper .Slide1 .gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.5;
+    background: linear-gradient(270deg, #845ec2, #d65db1, #ff6f91, #ff9671, #ffc75f, #f9f871);
+    background-size: 1200% 1200%;
+    -webkit-animation: AnimationName 30s ease infinite;
+    -moz-animation: AnimationName 30s ease infinite;
+    animation: AnimationName 30s ease infinite; }
+  #Wrapper .Slide1 h2 {
+    display: inline-block;
+    width: auto;
+    min-height: 120px;
+    font-weight: 300; }
+  #Wrapper .Slide1 .typed-cursor {
+    font-size: 42px; }
+
+#Wrapper .Slide2 {
+  -moz-overflow: hidden;
+  overflow: hidden; }
+  #Wrapper .Slide2 .ground {
+    position: absolute;
+    left: -300px;
+    right: -300px;
+    bottom: -100px;
+    height: 200px;
+    background-color: #27c787;
+    border-radius: 50%;
+    z-index: 0;
+    clip: auto; }
+  #Wrapper .Slide2 .props {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden; }
+  #Wrapper .Slide2 #GRADIENT {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -2; }
+  #Wrapper .Slide2 .rocket {
+    position: absolute;
+    bottom: 0;
+    z-index: 1; }
+  #Wrapper .Slide2 .smoke {
+    position: absolute;
+    bottom: -40px;
+    z-index: 0;
+    -webkit-animation: "smoke_size" 1s ease infinite;
+    -moz-animation: "smoke_size" 1s ease infinite;
+    animation: "smoke_size" 1s ease infinite; }
