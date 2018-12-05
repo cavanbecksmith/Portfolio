@@ -47,7 +47,7 @@ gulp.task('move-folders-all',function(){
 // --- DEFAULT TASKS
 // ------------------
 
-gulp.task('default',['webpack','sass', 'html', 'move-folders-all'], function(){});
+gulp.task('build',['webpack','sass', 'html', 'move-folders-all'], function(){});
 
 gulp.task('production',['minjs','mincss', 'move-folders-all'], function(){});
 
