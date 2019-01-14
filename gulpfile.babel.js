@@ -15,7 +15,7 @@ var rename = require("gulp-rename");
 var requireHTML = true;
 
 // ------------------
-// --- FOLDER SHIT
+// --- FOLDER MOVING STUFF
 // ------------------
 
 gulp.task('move-folders-1',function(){
